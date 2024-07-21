@@ -1,5 +1,7 @@
 package dev.muhammad.hibernatejpa;
 
+import dev.muhammad.hibernatejpa.dao.StudentDAOImpl;
+import dev.muhammad.hibernatejpa.entity.Student;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -13,8 +15,15 @@ public class Application {
     }
 
     @Bean
-    public CommandLineRunner commandLineRunner() {
-        return runner -> System.out.println("Hello, I am running in the command line");
+    public CommandLineRunner commandLineRunner(StudentDAOImpl studentDAOImpl) {
+        return runner -> createStudent(studentDAOImpl);
     }
 
+    public void createStudent(StudentDAOImpl studentDAOImpl) {
+        Student student = new Student("Shermukhammad",
+                "Karimov",
+                "karimov@gmail.com");
+
+        studentDAOImpl.save(student);
+    }
 }
